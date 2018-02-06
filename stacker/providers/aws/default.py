@@ -926,8 +926,12 @@ class Provider(BaseProvider):
     def get_outputs(self, stack_name, *args, **kwargs):
         if stack_name not in self._outputs:
             stack = self.get_stack(stack_name)
-            self._outputs[stack_name] = get_output_dict(stack)
+            self.set_outputs(stack_name, stack)
         return self._outputs[stack_name]
+
+    def set_outputs(self, stack_name, stack):
+        self._outputs[stack_name] = get_output_dict(stack)
+        return
 
     def get_stack_info(self, stack_name):
         """ Get the template and parameters of the stack currently in AWS
